@@ -44,10 +44,12 @@ class Operation:
         return self.operation["to"]
 
     def hide_number(self, account):
+
         """Метод для скрытия части номера счета/карты
         :param account: строка с данными счета/карты
         :return: строка с скрытым номером счета/карты
         """
+
         if account == "":
             return "Внесение средств"
         else:
@@ -55,13 +57,13 @@ class Operation:
             account_number = account[-1]
             account.pop(len(account) - 1)
             account_name = " ".join(account)
-            if "Счет" in account:
-                return f"{account_name} {account_number[16:20]}"
-            else:
-                return f"{account_name} {account_number[0:4]} {account_number[4:6]} **** {account_number[12:16]}"
+        if "Счет" in account:
+            return f"{account_name} **{account_number[12:16]}"
+        else:
+            return f"{account_name} {account_number[0:4]} {account_number[5:7]}** **** {account_number[12:16]}"
 
     def get_amount(self):
         """Метод для получения суммы операции и валюты
-        :return: строка с суммой и валютой операции
-        """
+    :return: строка с суммой и валютой операции
+    """
         return f'{self.operation["operationAmount"]["amount"]} {self.operation["operationAmount"]["currency"]["name"]}'

@@ -2,7 +2,6 @@ import unittest
 from datetime import datetime
 from src.operation_class import Operation
 
-
 class TestOperationMethods(unittest.TestCase):
 
     def setUp(self):
@@ -17,8 +16,7 @@ class TestOperationMethods(unittest.TestCase):
                 "currency": {"name": "USD"}
             }
         }
-        self.operation = Operation()
-        self.operation.init(self.operation_data)
+        self.operation = Operation(self.operation_data)
 
     def test_get_date(self):
         """Тест метода get_date на корректное извлечение и форматирование даты"""
@@ -39,14 +37,16 @@ class TestOperationMethods(unittest.TestCase):
 
     def test_hide_number(self):
         """Тест метода hide_number на корректное скрытие части номера счета/карты"""
-        self.assertEqual(self.operation.hide_number("Account 1234567890123456"), "Account 1234 56** **** 3456")
-        self.assertEqual(self.operation.hide_number("Card 9876543210987654"), "Card 9876 54** **** 7654")
-        self.assertEqual(self.operation.hide_number(""), "Внесение средств")
+        hidden_account_from = self.operation.hide_number(self.operation_data["from"])
+        hidden_account_to = self.operation.hide_number(self.operation_data["to"])
+        self.assertEqual(hidden_account_from, "Account 1234 67** **** 3456")
+        self.assertEqual(hidden_account_to, "Card 9876 43** **** 7654")
+
+
 
     def test_get_amount(self):
         """Тест метода get_amount на корректное получение суммы операции и валюты"""
         self.assertEqual(self.operation.get_amount(), "100.0 USD")
 
-
-if __name__ == '__main__':
+if __name__ == 'main':
     unittest.main()

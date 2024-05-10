@@ -1,6 +1,6 @@
 # Импортируем необходимые функции и классы
-from src.utils import load_operations, get_last_five_operations
 from src.operation_class import Operation
+from src.utils import load_operations, get_last_five_operations
 
 # Загружаем список всех операций клиента
 operations_list = load_operations()
